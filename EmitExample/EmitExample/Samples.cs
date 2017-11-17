@@ -2,22 +2,22 @@
 {
     using System.Reflection;
 
-    public sealed class SampleMutableDataActivator1 : IActivator
+    public sealed class SampleDataActivator : IActivator
     {
         public ConstructorInfo Source { get; }
 
-        public SampleMutableDataActivator1(ConstructorInfo source)
+        public SampleDataActivator(ConstructorInfo source)
         {
             Source = source;
         }
 
         public object Create(params object[] arguments)
         {
-            return new MutableData();
+            return new Data();
         }
     }
 
-    public sealed class SampleMutableDataActivator2 : IActivator
+    public sealed class SampleDataActivator2 : IActivator
     {
         private readonly ConstructorInfo source;
 
@@ -26,95 +26,95 @@
             get { return source; }
         }
 
-        public SampleMutableDataActivator2(ConstructorInfo source)
+        public SampleDataActivator2(ConstructorInfo source)
         {
             this.source = source;
         }
 
         public object Create(params object[] arguments)
         {
-            return new MutableData();
+            return new Data();
         }
     }
 
-    public sealed class SampleImutableDataActivator : IActivator
+    public sealed class SampleData2Activator : IActivator
     {
         public ConstructorInfo Source { get; }
 
-        public SampleImutableDataActivator(ConstructorInfo source)
+        public SampleData2Activator(ConstructorInfo source)
         {
             Source = source;
         }
 
         public object Create(params object[] arguments)
         {
-            return new ImutableData((int)arguments[0], (string)arguments[1]);
+            return new Data2((int)arguments[0], (string)arguments[1]);
         }
     }
 
-    public sealed class SampleMutableDataStringValueAccessor : IAccessor
+    public sealed class SampleDataStringValueAccessor : IAccessor
     {
         public PropertyInfo Source { get; }
 
-        public SampleMutableDataStringValueAccessor(PropertyInfo source)
+        public SampleDataStringValueAccessor(PropertyInfo source)
         {
             Source = source;
         }
 
         public object GetValue(object target)
         {
-            return ((MutableData)target).StringValue;
+            return ((Data)target).StringValue;
         }
 
         public void SetValue(object target, object value)
         {
-            ((MutableData)target).StringValue = (string)value;
+            ((Data)target).StringValue = (string)value;
         }
     }
 
-    public sealed class SampleMutableDataIntValueAccessor1 : IAccessor
+    public sealed class SampleDataIntValueAccessor : IAccessor
     {
         public PropertyInfo Source { get; }
 
-        public SampleMutableDataIntValueAccessor1(PropertyInfo source)
+        public SampleDataIntValueAccessor(PropertyInfo source)
         {
             Source = source;
         }
 
         public object GetValue(object target)
         {
-            return ((MutableData)target).IntValue;
+            return ((Data)target).IntValue;
         }
 
         public void SetValue(object target, object value)
         {
-            ((MutableData)target).IntValue = (int?)value ?? 0;
+            ((Data)target).IntValue = (int?)value ?? 0;
         }
     }
 
-    public sealed class SampleMutableDataIntValueAccessor2 : IAccessor
+    public sealed class SampleDataIntValueAccessor2 : IAccessor
     {
         public PropertyInfo Source { get; }
 
-        public SampleMutableDataIntValueAccessor2(PropertyInfo source)
+        public SampleDataIntValueAccessor2(PropertyInfo source)
         {
             Source = source;
         }
 
         public object GetValue(object target)
         {
-            return ((MutableData)target).IntValue;
+            return ((Data)target).IntValue;
         }
 
         public void SetValue(object target, object value)
         {
             if (value == null)
             {
-                ((MutableData)target).IntValue = 0;
+                ((Data)target).IntValue = 0;
             }
             else
             {
-                ((MutableData)target).IntValue = (int)value;
+                ((Data)target).IntValue = (int)value;
             }
         }
     }
@@ -157,7 +157,7 @@
 
         public object GetValue(object target)
         {
-            return ((MutableData)target).IntValue;
+            return ((Data)target).IntValue;
         }
 
         public void SetValue(object target, object value)

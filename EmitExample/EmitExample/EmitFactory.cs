@@ -31,12 +31,11 @@
                 {
                     assemblyBuilder = AssemblyBuilder.DefineDynamicAssembly(
                         new AssemblyName(AssemblyName),
-                        AssemblyBuilderAccess.RunAndSave);
-                    //AssemblyBuilderAccess.Run);
+                        AssemblyBuilderAccess.Run);
+                        //AssemblyBuilderAccess.RunAndSave);
                     moduleBuilder = assemblyBuilder.DefineDynamicModule(
-                        ModuleName,
-                        "test.dll");
-                    //ModuleName);
+                        ModuleName);
+                        //"test.dll");
                 }
                 return moduleBuilder;
             }
@@ -92,19 +91,19 @@
 
         private static void DefineActivatorPropertySource(TypeBuilder typeBuilder, FieldBuilder sourceField)
         {
-            var sourceProperty = typeBuilder.DefineProperty(
+            var property = typeBuilder.DefineProperty(
                 "Source",
                 PropertyAttributes.None,
                 typeof(ConstructorInfo),
                 null);
-            var getSourceProperty = typeBuilder.DefineMethod(
+            var method = typeBuilder.DefineMethod(
                 "get_Source",
                 MethodAttributes.Public | MethodAttributes.HideBySig | MethodAttributes.NewSlot | MethodAttributes.SpecialName | MethodAttributes.Virtual | MethodAttributes.Final,
                 typeof(ConstructorInfo),
                 Type.EmptyTypes);
-            sourceProperty.SetGetMethod(getSourceProperty);
+            property.SetGetMethod(method);
 
-            var ilGenerator = getSourceProperty.GetILGenerator();
+            var ilGenerator = method.GetILGenerator();
 
             ilGenerator.Emit(OpCodes.Ldarg_0);
             ilGenerator.Emit(OpCodes.Ldfld, sourceField);

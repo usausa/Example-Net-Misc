@@ -1,19 +1,19 @@
 ﻿namespace EmitExample
 {
-    public class MutableData
+    public class Data
     {
         public int IntValue { get; set; }
 
         public string StringValue { get; set; }
     }
 
-    public class ImutableData
+    public class Data2
     {
         public int IntValue { get; }
 
         public string StringValue { get; }
 
-        public ImutableData(int intValue, string stringValue)
+        public Data2(int intValue, string stringValue)
         {
             IntValue = intValue;
             StringValue = stringValue;

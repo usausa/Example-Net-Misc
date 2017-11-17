@@ -18,29 +18,29 @@
 
         private static void CanActivateDefaultConstructor()
         {
-            var ctor = typeof(MutableData).GetConstructor(Type.EmptyTypes);
+            var ctor = typeof(Data).GetConstructor(Type.EmptyTypes);
             var activator = EmitFactory.Default.CreateActivator(ctor);
 
-            var obj = activator.Create(null);
-            Debug.Assert(obj.GetType() == typeof(MutableData));
+            var obj = activator.Create();
+            Debug.Assert(obj.GetType() == typeof(Data));
         }
 
         private static void CanActivateWithArgument()
         {
-            var ctor = typeof(ImutableData).GetConstructor(new[] { typeof(int), typeof(string) });
+            var ctor = typeof(Data2).GetConstructor(new[] { typeof(int), typeof(string) });
             var activator = EmitFactory.Default.CreateActivator(ctor);
 
-            var obj = (ImutableData)activator.Create(1, "abc");
+            var obj = (Data2)activator.Create(1, "abc");
             Debug.Assert(obj.IntValue == 1);
             Debug.Assert(obj.StringValue == "abc");
         }
 
         private static void CanAccessClassProperty()
         {
-            var pi = typeof(MutableData).GetProperty(nameof(MutableData.StringValue));
+            var pi = typeof(Data).GetProperty(nameof(Data.StringValue));
             var accessor = EmitFactory.Default.CreateAccessor(pi);
 
-            var data = new MutableData();
+            var data = new Data();
 
             accessor.SetValue(data, "abc");
             Debug.Assert((string)accessor.GetValue(data) == "abc");
@@ -48,10 +48,10 @@
 
         private static void CanAccessValueTypeProperty()
         {
-            var pi = typeof(MutableData).GetProperty(nameof(MutableData.IntValue));
+            var pi = typeof(Data).GetProperty(nameof(Data.IntValue));
             var accessor = EmitFactory.Default.CreateAccessor(pi);
 
-            var data = new MutableData();
+            var data = new Data();
 
             accessor.SetValue(data, 1);
             Debug.Assert((int)accessor.GetValue(data) == 1);
