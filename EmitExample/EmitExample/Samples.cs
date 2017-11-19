@@ -157,7 +157,7 @@
 
         public object GetValue(object target)
         {
-            return ((Data)target).IntValue;
+            return ((StructPropertyData)target).StructValue;
         }
 
         public void SetValue(object target, object value)
