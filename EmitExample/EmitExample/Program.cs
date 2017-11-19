@@ -44,6 +44,9 @@
 
             accessor.SetValue(data, "abc");
             Debug.Assert((string)accessor.GetValue(data) == "abc");
+
+            accessor.SetValue(data, null);
+            Debug.Assert((string)accessor.GetValue(data) == null);
         }
 
         private static void CanAccessValueTypeProperty()
@@ -55,6 +58,9 @@
 
             accessor.SetValue(data, 1);
             Debug.Assert((int)accessor.GetValue(data) == 1);
+
+            accessor.SetValue(data, null);
+            Debug.Assert((int)accessor.GetValue(data) == 0);
         }
 
         private static void CanAccessEnumProperty()
