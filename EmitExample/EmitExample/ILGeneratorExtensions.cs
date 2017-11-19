@@ -45,7 +45,7 @@
                     il.Emit(OpCodes.Ldc_I4_8);
                     break;
                 default:
-                    if (i < 128)
+                    if ((i >= -128) && (i <= 127))
                     {
                         il.Emit(OpCodes.Ldc_I4_S, (sbyte)i);
                     }
