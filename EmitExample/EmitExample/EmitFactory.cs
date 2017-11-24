@@ -15,9 +15,9 @@
 
         private readonly object sync = new object();
 
-        private readonly Dictionary<ConstructorInfo, IActivator> activatorCash = new Dictionary<ConstructorInfo, IActivator>();
+        private readonly Dictionary<ConstructorInfo, IActivator> activatorCache = new Dictionary<ConstructorInfo, IActivator>();
 
-        private readonly Dictionary<PropertyInfo, IAccessor> accessorCash = new Dictionary<PropertyInfo, IAccessor>();
+        private readonly Dictionary<PropertyInfo, IAccessor> accessorCache = new Dictionary<PropertyInfo, IAccessor>();
 
         private AssemblyBuilder assemblyBuilder;
 
@@ -49,10 +49,10 @@
         {
             lock (sync)
             {
-                if (!activatorCash.TryGetValue(ci, out var activator))
+                if (!activatorCache.TryGetValue(ci, out var activator))
                 {
                     activator = CreateActivatorInternal(ci);
-                    activatorCash[ci] = activator;
+                    activatorCache[ci] = activator;
                 }
 
                 return activator;
@@ -162,10 +162,10 @@
         {
             lock (sync)
             {
-                if (!accessorCash.TryGetValue(pi, out var accessor))
+                if (!accessorCache.TryGetValue(pi, out var accessor))
                 {
                     accessor = CreateAccessorInternal(pi);
-                    accessorCash[pi] = accessor;
+                    accessorCache[pi] = accessor;
                 }
 
                 return accessor;
