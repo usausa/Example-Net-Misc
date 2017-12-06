@@ -62,7 +62,7 @@
         private IActivator CreateActivatorInternal(ConstructorInfo ci)
         {
             var typeBuilder = ModuleBuilder.DefineType(
-                $"{ci.DeclaringType.FullName}_DynamicActivator",
+                $"{ci.DeclaringType.FullName}_DynamicActivator{Array.IndexOf(ci.DeclaringType.GetConstructors(), ci)}",
                 TypeAttributes.Public | TypeAttributes.AutoLayout | TypeAttributes.AnsiClass | TypeAttributes.Sealed | TypeAttributes.BeforeFieldInit);
 
             typeBuilder.AddInterfaceImplementation(typeof(IActivator));
