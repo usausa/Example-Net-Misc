@@ -263,9 +263,14 @@
                 return;
             }
 
-            ilGenerator.Emit(OpCodes.Ldarg_1);
-            ilGenerator.Emit(OpCodes.Castclass, pi.DeclaringType);
-            ilGenerator.Emit(OpCodes.Callvirt, pi.GetGetMethod());
+            if (!pi.GetGetMethod().IsStatic)
+            {
+                ilGenerator.Emit(OpCodes.Ldarg_1);
+                ilGenerator.Emit(OpCodes.Castclass, pi.DeclaringType);
+            }
+
+            ilGenerator.Emit(pi.GetGetMethod().IsStatic ? OpCodes.Call : OpCodes.Callvirt, pi.GetGetMethod());
+
             if (pi.PropertyType.IsValueType)
             {
                 ilGenerator.Emit(OpCodes.Box, pi.PropertyType);
@@ -300,8 +305,11 @@
                 ilGenerator.Emit(OpCodes.Brtrue_S, hasValue);
 
                 // null
-                ilGenerator.Emit(OpCodes.Ldarg_1);
-                ilGenerator.Emit(OpCodes.Castclass, pi.DeclaringType);
+                if (!pi.GetGetMethod().IsStatic)
+                {
+                    ilGenerator.Emit(OpCodes.Ldarg_1);
+                    ilGenerator.Emit(OpCodes.Castclass, pi.DeclaringType);
+                }
 
                 var type = pi.PropertyType.IsEnum ? pi.PropertyType.GetEnumUnderlyingType() : pi.PropertyType;
                 if (LdcDictionary.TryGetValue(type, out var action))
@@ -316,32 +324,38 @@
                     ilGenerator.Emit(OpCodes.Ldloc_0);
                 }
 
-                ilGenerator.Emit(OpCodes.Callvirt, pi.GetSetMethod());
+                ilGenerator.Emit(pi.GetSetMethod().IsStatic ? OpCodes.Call : OpCodes.Callvirt, pi.GetSetMethod());
 
                 ilGenerator.Emit(OpCodes.Ret);
 
                 // not null
                 ilGenerator.MarkLabel(hasValue);
 
-                ilGenerator.Emit(OpCodes.Ldarg_1);
-                ilGenerator.Emit(OpCodes.Castclass, pi.DeclaringType);
+                if (!pi.GetGetMethod().IsStatic)
+                {
+                    ilGenerator.Emit(OpCodes.Ldarg_1);
+                    ilGenerator.Emit(OpCodes.Castclass, pi.DeclaringType);
+                }
 
                 ilGenerator.Emit(OpCodes.Ldarg_2);
                 ilGenerator.Emit(OpCodes.Unbox_Any, pi.PropertyType);
 
-                ilGenerator.Emit(OpCodes.Callvirt, pi.GetSetMethod());
+                ilGenerator.Emit(pi.GetSetMethod().IsStatic ? OpCodes.Call : OpCodes.Callvirt, pi.GetSetMethod());
 
                 ilGenerator.Emit(OpCodes.Ret);
             }
             else
             {
-                ilGenerator.Emit(OpCodes.Ldarg_1);
-                ilGenerator.Emit(OpCodes.Castclass, pi.DeclaringType);
+                if (!pi.GetGetMethod().IsStatic)
+                {
+                    ilGenerator.Emit(OpCodes.Ldarg_1);
+                    ilGenerator.Emit(OpCodes.Castclass, pi.DeclaringType);
+                }
 
                 ilGenerator.Emit(OpCodes.Ldarg_2);
                 ilGenerator.Emit(OpCodes.Castclass, pi.PropertyType);
 
-                ilGenerator.Emit(OpCodes.Callvirt, pi.GetSetMethod());
+                ilGenerator.Emit(pi.GetSetMethod().IsStatic ? OpCodes.Call : OpCodes.Callvirt, pi.GetSetMethod());
 
                 ilGenerator.Emit(OpCodes.Ret);
             }
