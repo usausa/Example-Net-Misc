@@ -1,0 +1,6 @@
+﻿{
+  "targetDirectories": [
+    "Network"
+  ],
+  "fileFilter": "*.cs"
+}

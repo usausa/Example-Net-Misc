@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Example.Library.CodeGenerator": {
+      "commandName": "Project",
+      "commandLineArgs": "C:\\Users\\machi\\Desktop\\GitHub\\Work-Net-CodeGenerator\\Example.Client\\obj\\Debug\\netcoreapp1.1\\Example.generated.cs C:\\Users\\machi\\Desktop\\GitHub\\Work-Net-CodeGenerator\\Example.Client"
+    }
+  }
+}

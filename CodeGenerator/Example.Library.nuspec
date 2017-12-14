@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Example.Library</id>
+    <version>0.3.0</version>
+    <authors>machi_pon</authors>
+    <owners>machi_pon</owners>
+    <description>Code generation example</description>
+    <dependencies>
+      <dependency id="NETStandard.Library" version="1.6.1" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="Example.Library\bin\Release\netstandard1.1\Example.Library.dll" target="lib\netstandard1.1" />
+    <file src="Example.Library.targets" target="build\netstandard1.1" />
+    <file src="Example.Library.CodeGenerator\bin\Release\PublishOutput\**\*" target="tools" />
+  </files>
+</package>
