@@ -305,7 +305,7 @@
                 ilGenerator.Emit(OpCodes.Brtrue_S, hasValue);
 
                 // null
-                if (!pi.GetGetMethod().IsStatic)
+                if (!pi.GetSetMethod().IsStatic)
                 {
                     ilGenerator.Emit(OpCodes.Ldarg_1);
                     ilGenerator.Emit(OpCodes.Castclass, pi.DeclaringType);
@@ -331,7 +331,7 @@
                 // not null
                 ilGenerator.MarkLabel(hasValue);
 
-                if (!pi.GetGetMethod().IsStatic)
+                if (!pi.GetSetMethod().IsStatic)
                 {
                     ilGenerator.Emit(OpCodes.Ldarg_1);
                     ilGenerator.Emit(OpCodes.Castclass, pi.DeclaringType);
@@ -346,7 +346,7 @@
             }
             else
             {
-                if (!pi.GetGetMethod().IsStatic)
+                if (!pi.GetSetMethod().IsStatic)
                 {
                     ilGenerator.Emit(OpCodes.Ldarg_1);
                     ilGenerator.Emit(OpCodes.Castclass, pi.DeclaringType);
