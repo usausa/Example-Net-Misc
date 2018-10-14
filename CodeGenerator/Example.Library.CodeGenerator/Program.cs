@@ -50,7 +50,7 @@
             if (File.Exists(generatedFile))
             {
                 var current = File.ReadAllText(generatedFile, Encoding.UTF8);
-                if (String.Equals(current, contents, StringComparison.Ordinal))
+                if (String.Equals(current, contents))
                 {
                     return 0;
                 }
